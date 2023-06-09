@@ -1,0 +1,20 @@
+{
+  "name": "raml_postman_converter",
+  "version": "1.0.0",
+  "description": "convert raml to postman collection",
+  "main": "tools/RAMLconverter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "raml",
+    "postman",
+    "mulesoft"
+  ],
+  "author": "Ngoc Quang Nguyen",
+  "license": "ISC",
+  "dependencies": {
+    "postman-collection": "latest",
+    "raml1-to-postman": "^0.1.8"
+  }
+}
