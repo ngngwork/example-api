@@ -106,9 +106,9 @@ myRAMLtoPostman = function (val) {
     //regexFirstRequest = /^\s*\//gm;
     regexFirstRequest = /^\s*\/.*/gm;
     firstRequest = newRamlSpec.match(regexFirstRequest)[0];
-    console.log(firstRequest);
+    //console.log(firstRequest);
     newRamlSpec = newRamlSpec.replace(firstRequest,fakeRequest + firstRequest);
-    //console.log(newRamlSpec);
+    console.log(newRamlSpec);
 
     //console.log(addingFragments(ramlSpec,path));
     //convert raml to postman collection
