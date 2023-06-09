@@ -1,0 +1,152 @@
+#%RAML 1.0 DataType
+description: Premium Products Stocks Data Type
+
+type: object
+properties:
+  product_generation_request_id:
+    type: string
+    required: true
+  json_version:
+    type: string
+    required: false
+  request_type:
+    type: string
+    required: false    
+  request_date:
+    type: string
+    required: false  
+  environment:
+    type: string
+    required: false
+  sku:
+    type: string
+    required: true  
+  ams_sku:
+    type: string
+    required: true    
+  client_id:
+    type: string
+    required: true
+  productname:
+    type: string
+    required: true 
+  material:
+    type: string
+    required: false 
+  brand:
+    type: string
+    required: false
+  prices:
+    type: object
+    properties:
+      ek:
+        type: string
+        required: true
+      monthly_uplift_gross:
+        type: string
+        required: false
+      monthly_uplift_net:
+        type: string
+        required: false    
+      monthly_uplift_gross_on_cancellation:
+        type: string
+        required: false  
+      monthly_uplift_net_on_cancellation:
+        type: string
+        required: false
+      additional_payment_value_gross:
+        type: string
+        required: false  
+      additional_payment_value_net:
+        type: string
+        required: false    
+      uvp:
+        type: string
+        required: true
+      retail_price_gross:
+        type: string
+        required: false 
+      repayment_per_year:
+        type: string
+        required: false 
+      seperate_billing_on_monthly_repayed:
+        type: string
+        required: false
+      vat_rate:
+        type: string
+        required: false 
+      billing_period:
+        type: string
+        required: false
+  qty_unit:
+    type: string
+    required: false
+  measurement_unit:
+    type: string
+    required: false
+  length:
+    type: string
+    required: false    
+  width:
+    type: string
+    required: false  
+  height:
+    type: string
+    required: false
+  weight:
+    type: string
+    required: false  
+  weight_unit:
+    type: string
+    required: false    
+  handover_type:
+    type: string
+    required: true
+  returnable:
+    type: string
+    required: true
+  serial_number:
+    type: number
+    required: false 
+  phone_number:
+    type: number
+    required: false
+  is_reward:
+    type: number
+    required: false
+  reward_type:
+    type: string
+    required: true
+  bonus_coop:
+    type: string
+    required: false    
+  plb:
+    type: string
+    required: false  
+  main_argument_1:
+    type: string
+    required: false
+  main_argument_2:
+    type: string
+    required: false  
+  main_argument_3:
+    type: string
+    required: false    
+  legal_copy:
+    type: string
+    required: false
+  foot_note:
+    type: string
+    required: false 
+  nkb:
+    type: number
+    required: false 
+  special_bonus:
+    type: number
+    required: false
+  start_date:
+    type: string
+    required: false 
+  end_date:
+    type: string
+    required: false

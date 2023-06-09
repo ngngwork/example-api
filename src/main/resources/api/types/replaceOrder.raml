@@ -1,0 +1,74 @@
+#%RAML 1.0 DataType
+description: Returned and Resend order data
+
+type: object
+properties:
+  order:
+    type: object
+    properties:
+      parentId:
+        type: string
+        required: true
+      shopOrderId:
+        type: string
+        required: true
+      orderCreated:
+        type: date-only 
+        required: true
+      guid:
+        type: string
+        required: false
+      client:
+        type: string
+        required: true
+      status:
+        type: string
+        required: true
+  customer:
+    type: object
+    properties:
+      firstName:
+        type: string
+        required: true
+      lastName:
+        type: string
+        required: true
+      email:
+        type: string
+        required: false
+      zip:
+        type: string
+        required: true
+      city:
+        type: string
+        required: true
+      cityDistrict:
+        type: string
+        required: false
+      country:
+        type: string
+        required: true
+      street:
+        type: string
+        required: true
+      streetNr:
+        type: string
+        required: false
+      salutation:
+        type: string
+        required: false
+      company:
+        type: string
+        required: false
+      title:
+        type: string
+        required: false
+      phone:
+        type: string
+        required: false
+  order_items:
+    type: object
+    properties:
+      bonusCode:
+        type: string
+        required: true

@@ -1,0 +1,148 @@
+#%RAML 1.0
+version: v1
+title: s-ams-api
+protocols:
+  - HTTPS
+description: IS-137 AMS System API for Premium Shipments
+
+
+##TRAITS##
+traits:
+  error-reponse: !include traits/error-reponses.raml
+
+##DATATYPE##
+types:
+  requestType: !include types/releaseOrderRequest.raml
+  cancelOrderType: !include types/cancelOrder.raml
+  createOrderType: !include types/createOrder.raml
+  replaceOrderType: !include types/replaceOrder.raml
+  lostOrderType: !include types/lostOrder.raml
+  returnRequestOrderType: !include types/returnRequest.raml
+
+#Shipment Creation(New)#             
+/orders:
+  is: [error-reponse]
+  post:
+    body:
+      application/json:
+        type: createOrderType
+        examples: 
+          createOrder: !include examples/request/createRequest.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/200-response.json
+
+#Shipment Release#
+  /{order-id}/release:
+    is: [error-reponse]
+    uriParameters:
+      order-id:
+        type: string
+        description: Salesforce ID (Unique) of the tracker created.  
+    put:
+      body:
+        application/json:
+          type: requestType
+          example: !include examples/request/releaseRequest.json                  
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/200-response.json
+
+#Shipment Cancellation#  
+  /{order-id}/cancellations:
+    is: [error-reponse]
+    uriParameters:
+      order-id:
+        type: string
+        description: Salesforce ID (Unique) of the tracker created.           
+    post:
+      body:
+        application/json:
+          type: cancelOrderType
+          example: !include examples/request/cancelRequest.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/200-response.json
+
+#Shipment Creation(Replacement Orders-Returned and Resend)#  
+  /replacements/return:
+    is: [error-reponse]
+    post:
+      body:
+        application/json:
+          type: replaceOrderType
+          examples: 
+            replaceOrder: !include examples/request/replaceRequest.json          
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/200-response.json  
+
+#Shipment Creation(Replacement Orders-Lost and Resend)#  
+  /replacements/loss:
+    is: [error-reponse]
+    post:
+      body:
+        application/json:
+          type: lostOrderType
+          examples: 
+            lostOrder: !include examples/request/lostRequest.json          
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/200-response.json 
+#Return Request Creation
+  /returns:
+    is: [error-reponse]
+    post:
+      body:
+        application/json:
+          type: returnRequestOrderType
+          examples: 
+            lostOrder: !include examples/request/returnRequest.json          
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/200-response.json
+
+#Premium Products Stocks:
+/premium-products:
+  /stocks:
+    is: [error-reponse]
+    post:
+      body:
+        application/json:
+          type: !include /types/premiumProductsStocksType.raml
+          examples: 
+            premiumProductsStocks: !include examples/request/premiumProductsStocks-Request.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: examples/200-response.json
+    /{stock-id}:
+      is: [error-reponse]
+      uriParameters:
+          stock-id:
+            type: string
+            description: SKU stock keeping unit 
+      put:
+        body:
+          application/json:
+            type: !include /types/premiumProductsStocksType.raml
+            examples: 
+              premiumProductsStocks: !include examples/request/premiumProductsStocks-Request.json
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include examples/200-response.json
