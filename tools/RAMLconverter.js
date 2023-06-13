@@ -1,22 +1,48 @@
 
 
-myRAMLtoPostman = function (val) {
+myRAMLtoPostman = function (inputPath) {
     const { Console } = require('console'); 
     
+    var path = require('path');
     var fs = require('fs');
 
     const { Collection, Item, Header } = require('postman-collection');
 
     Converter = require('raml1-to-postman');
 
+    function fromDir(startPath, filter) {
+
+        console.log('Starting from dir '+startPath+'/');
+    
+        if (!fs.existsSync(startPath)) {
+            console.log("no dir ", startPath);
+            return;
+        }
+    
+        var files = fs.readdirSync(startPath);
+        console.log("files are:", files);
+        for (var i = 0; i < files.length; i++) {
+            var filename = path.join(startPath, files[i]);
+            if (filename.endsWith(filter)) {
+                console.log('-- found: ', filename);
+                return filename;
+            };
+        };
+        console.log("no raml ", startPath);
+    };
+
+    fullPath = fromDir(inputPath, '.raml');
+    console.log('full path is', fullPath);
+
     const regexFileName = /\/(?:.(?!\/))+$/gm;
-    const fileName = val.match(regexFileName)[0].replace('/','');
+    const fileName = fullPath.match(regexFileName)[0].replace('/','');
     console.log(fileName);
 
-    const path = val.replace(fileName,'');
-    console.log(path);
-    ramlSpec = fs.readFileSync(val, {encoding: 'UTF8'});
+    const pathWithoutFile = fullPath.replace(fileName,'');
+    console.log(pathWithoutFile);
+    ramlSpec = fs.readFileSync(fullPath, {encoding: 'UTF8'});
     
+
 
     //empty postman collection
     const postmanCollection = new Collection({
@@ -28,7 +54,8 @@ myRAMLtoPostman = function (val) {
         item: [],
       });
 
-    function addingFragments (ramlSpec, path){
+    //adding fragments from files into RAML
+    function addingFragments (ramlSpec, pathWithoutFile){
         //finding includes
         const regex = /!include.*/g;
         const includeArray = ramlSpec.match(regex);
@@ -47,7 +74,7 @@ myRAMLtoPostman = function (val) {
             {
                 element = element.trim();
                 var includePath = element.replace('!include', '');
-                var includeFilePath = path.concat(includePath).replace(' ','');
+                var includeFilePath = pathWithoutFile.concat(includePath).replace(' ','');
                 if(includeFilePath.includes('../')){
                     includeFilePath = includeFilePath.replace('../','');
                 }
@@ -95,9 +122,9 @@ myRAMLtoPostman = function (val) {
     }
 
     //replace all includes
-    var newRamlSpec = addingFragments(ramlSpec,path);
+    var newRamlSpec = addingFragments(ramlSpec,pathWithoutFile);
     while(newRamlSpec.includes('!include')){
-        newRamlSpec = addingFragments(newRamlSpec,path);
+        newRamlSpec = addingFragments(newRamlSpec,pathWithoutFile);
     }
 
     console.log(newRamlSpec);
@@ -110,7 +137,7 @@ myRAMLtoPostman = function (val) {
     newRamlSpec = newRamlSpec.replace(firstRequest,fakeRequest + firstRequest);
     console.log(newRamlSpec);
 
-    //console.log(addingFragments(ramlSpec,path));
+    //console.log(addingFragments(ramlSpec,pathWithoutFile));
     //convert raml to postman collection
     Converter.convert({ type: 'string', data: newRamlSpec, options:
         {
