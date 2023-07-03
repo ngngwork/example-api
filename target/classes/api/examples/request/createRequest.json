@@ -1,0 +1,32 @@
+{
+  "order": {
+        "shopOrderId": "005E0000001aABc",
+        "parentId": "a3t5r000000GMmzAAG",
+        "orderCreated": "2020-01-01", 
+        "guid" : "AMS00000000000000001",
+        "status": "Pending",
+        "client": "LIDLPLUS"
+    },
+    "customer": {
+        "firstName": "Max",
+        "lastName": "Mustermann", 
+        "email": "max@mustermann.de",
+        "zip": "04109", 
+        "city": "Leipzig", 
+        "cityDistrict": "Zentrum", 
+        "country": "DE", 
+        "street": "Hugo-Licht-Strasse", 
+        "streetNr": "1 a", 
+        "salutation": "Herr", 
+        "company": "FS eCommerce", 
+        "title": "Dr.",
+        "phone": "+1234567-873 / 4723",
+        "deutschlandCardNumber": "DC347666"
+    },
+    "order_items":
+      {
+            "bonusCode": "B12345"   
+      }
+    
+}
+

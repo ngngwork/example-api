@@ -1,0 +1,17 @@
+#%RAML 1.0 DataType
+
+description: create return request for an order
+type: object
+properties:
+  shopOrderId:
+    type: string
+    required: true
+  status:
+    type: string
+    required: true
+  returnReason:
+    type: integer
+    required: true
+  client:
+    type: string
+    required: false
